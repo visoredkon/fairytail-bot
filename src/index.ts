@@ -1,12 +1,24 @@
-import { Client, GatewayIntentBits } from 'discord.js'
+import { ActivityType, Client, GatewayIntentBits } from 'discord.js'
+import { eventLoader } from './handlers/event'
 
 const { Guilds } = GatewayIntentBits
 const client = new Client({ intents: [Guilds] })
 
-client.once('ready', () => {
-    console.log(client.user?.username)
-})
+const main = (): void => {
+    client.user?.setPresence({
+        activities: [{ name: `Youtube`, type: ActivityType.Streaming }]
+    })
 
-client.login(Bun.env.TOKEN).catch(err => {
-    console.log(err)
-})
+    eventLoader(client).catch(err => {
+        console.log(err)
+    })
+}
+
+client
+    .login(Bun.env.TOKEN)
+    .then(() => {
+        main()
+    })
+    .catch(err => {
+        console.log(err)
+    })

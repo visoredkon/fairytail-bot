@@ -1,8 +1,8 @@
 module.exports = {
     root: true,
     env: {
-        es2021: true,
-        node: true
+        node: true,
+        es2024: true
     },
     extends: [
         'standard-with-typescript',
@@ -18,27 +18,16 @@ module.exports = {
         sourceType: 'module'
     },
     rules: {
-        'import/first': 'error',
-        'import/no-duplicates': 'error',
-        'import/newline-after-import': 'error',
-        'sort-imports': [
-            'error',
-            {
-                allowSeparatedGroups: true,
-                memberSyntaxSortOrder: ['none', 'all', 'single', 'multiple']
-            }
-        ],
         'simple-import-sort/exports': 'error',
         'simple-import-sort/imports': [
             'error',
             {
-                groups: [
-                    ['^(@|components)(/.*|$)'],
-                    ['^\\u0000'],
-                    ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
-                    ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$']
-                ]
+                groups: [['^\\u0000', '^node:', '^@?\\w', '^', '^\\.']]
             }
-        ]
+        ],
+
+        'import/first': 'error',
+        'import/no-duplicates': 'error',
+        'import/newline-after-import': 'error'
     }
 }

@@ -1,14 +1,23 @@
+import { AlignmentEnum, AsciiTable3 } from 'ascii-table3'
 import { type Client, Events } from 'discord.js'
-import { Event } from '../class/Event'
+import { log } from '../utils/log'
 
-export default new Event({
+export default {
     name: Events.ClientReady,
     once: false,
     execute(client: Client): void {
-        console.log(client.user?.username)
+        log(client.user?.username, 'info')
+
+        log('=====================================[Memuat Guilds]====\n')
+        const guildsTable = new AsciiTable3('Guilds')
+            .setHeading('Guild ID', 'Guild Name')
+            .setAlign(2, AlignmentEnum.CENTER)
+            .setStyle('unicode-round')
 
         client.guilds.cache.forEach(guild => {
-            console.log(`${guild.id}: ${guild.name}`)
+            guildsTable.addRow(guild.id, guild.name)
         })
+        log(guildsTable.toString())
+        log('=======================================================')
     }
-})
+}

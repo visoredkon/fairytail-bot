@@ -1,8 +1,9 @@
 import chalk from 'chalk'
 
 /**
- * @param {string} message - Message to log
- * @param {'info' | 'err' | 'warn' | 'done'} style - Style of the log.
+ * Logs a message to the console with a specified style.
+ * @param message - The message to log.
+ * @param {'info' | 'err' | 'warn' | 'done'} style - The style of the log message. Can be one of 'info', 'err', 'warn', or 'done'.
  */
 export const log: Console['log'] = (message: string, style: string) => {
     const styles: Record<string, { prefix?: string; logFunction: (message: string) => void }> = {

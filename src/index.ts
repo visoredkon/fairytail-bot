@@ -1,3 +1,4 @@
+import { env } from "bun";
 import { ActivityType, Client, GatewayIntentBits } from "discord.js";
 import { commandsLoader } from "./handlers/commandsLoader";
 import { eventLoader } from "./handlers/eventLoader";
@@ -11,7 +12,7 @@ client.user?.setPresence({
 });
 
 client
-    .login(Bun.env.TOKEN)
+    .login(env.TOKEN)
     .then(() => {
         eventLoader(client).catch((err) => {
             log(err, "error");

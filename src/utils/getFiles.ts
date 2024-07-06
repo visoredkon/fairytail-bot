@@ -15,7 +15,7 @@ export const getFiles = async (dir: string): Promise<string[]> => {
         const findFiles = (path: string): void => {
             for (const contents of readdirSync(path, { withFileTypes: true })) {
                 if (contents.isFile() && contents.name.endsWith(".ts")) {
-                    files.push(import.meta.resolveSync(`${path}/${contents.name}`));
+                    files.push(require.resolve(`${path}/${contents.name}`));
                 }
 
                 if (contents.isDirectory()) {

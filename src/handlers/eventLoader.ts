@@ -1,6 +1,6 @@
-import { type Client } from 'discord.js'
-import { getFiles } from '../utils/getFiles'
-import { log } from '../utils/log'
+import type { Client } from "discord.js";
+import { getFiles } from "../utils/getFiles";
+import { log } from "../utils/log";
 
 /**
  * Loads all event files from the 'events' directory and registers them with the client.
@@ -8,27 +8,27 @@ import { log } from '../utils/log'
  * @returns A Promise that resolves when all events have been registered.
  */
 export const eventLoader = async (client: Client): Promise<void> => {
-    await getFiles('events')
-        .then(async files => {
+    await getFiles("events")
+        .then(async (files) => {
             for (const file of files) {
                 const eventModule = (await import(file)) as {
-                    default: { once: boolean; name: string; execute: (client: Client) => void }
-                }
+                    default: { once: boolean; name: string; execute: (client: Client) => void };
+                };
 
-                const event = eventModule.default
+                const event = eventModule.default;
 
                 if (event.once) {
-                    client.once(event.name, (clientCB: Client) => {
-                        event.execute(clientCB)
-                    })
+                    client.once(event.name, (clientCb: Client) => {
+                        event.execute(clientCb);
+                    });
                 } else {
-                    client.on(event.name, (clientCB: Client) => {
-                        event.execute(clientCB)
-                    })
+                    client.on(event.name, (clientCb: Client) => {
+                        event.execute(clientCb);
+                    });
                 }
             }
         })
-        .catch(err => {
-            log(err, 'err')
-        })
-}
+        .catch((err) => {
+            log(err, "err");
+        });
+};

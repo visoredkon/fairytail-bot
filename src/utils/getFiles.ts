@@ -1,4 +1,4 @@
-import { readdirSync } from 'fs'
+import { readdirSync } from "fs";
 
 /**
  * Returns an array of file paths for all TypeScript files in the specified directory and its subdirectories.
@@ -7,29 +7,29 @@ import { readdirSync } from 'fs'
  * @throws An error if no TypeScript files are found in the specified directory and its subdirectories.
  */
 export const getFiles = async (dir: string): Promise<string[]> => {
-    const conPath = `${process.cwd()}/src/${dir}`
+    const conPath = `${process.cwd()}/src/${dir}`;
 
     return await new Promise((resolve, reject) => {
-        const files: string[] = []
+        const files: string[] = [];
 
         const findFiles = (path: string): void => {
-            readdirSync(path, { withFileTypes: true }).forEach(contents => {
-                if (contents.isFile() && contents.name.endsWith('.ts')) {
-                    files.push(import.meta.resolveSync(`${path}/${contents.name}`))
+            readdirSync(path, { withFileTypes: true }).forEach((contents) => {
+                if (contents.isFile() && contents.name.endsWith(".ts")) {
+                    files.push(import.meta.resolveSync(`${path}/${contents.name}`));
                 }
 
                 if (contents.isDirectory()) {
-                    findFiles(`${path}/${contents.name}`)
+                    findFiles(`${path}/${contents.name}`);
                 }
-            })
-        }
+            });
+        };
 
-        findFiles(conPath)
+        findFiles(conPath);
 
         if (files.length > 0) {
-            resolve(files)
+            resolve(files);
         } else {
-            reject(new Error(`No files found in ${conPath}`))
+            reject(new Error(`No files found in ${conPath}`));
         }
-    })
-}
+    });
+};

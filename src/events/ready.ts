@@ -14,9 +14,10 @@ export default {
             .setAlign(2, AlignmentEnum.CENTER)
             .setStyle("unicode-round");
 
-        client.guilds.cache.forEach((guild) => {
-            guildsTable.addRow(guild.id, guild.name);
-        });
+        for (const [guildId, guild] of client.guilds.cache) {
+            guildsTable.addRow(guildId, guild.name);
+        }
+
         log(guildsTable.toString());
         log("=======================================================");
     },

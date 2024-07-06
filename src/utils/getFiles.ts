@@ -1,4 +1,4 @@
-import { readdirSync } from "fs";
+import { readdirSync } from "node:fs";
 
 /**
  * Returns an array of file paths for all TypeScript files in the specified directory and its subdirectories.
@@ -13,7 +13,7 @@ export const getFiles = async (dir: string): Promise<string[]> => {
         const files: string[] = [];
 
         const findFiles = (path: string): void => {
-            readdirSync(path, { withFileTypes: true }).forEach((contents) => {
+            for (const contents of readdirSync(path, { withFileTypes: true })) {
                 if (contents.isFile() && contents.name.endsWith(".ts")) {
                     files.push(import.meta.resolveSync(`${path}/${contents.name}`));
                 }
@@ -21,7 +21,7 @@ export const getFiles = async (dir: string): Promise<string[]> => {
                 if (contents.isDirectory()) {
                     findFiles(`${path}/${contents.name}`);
                 }
-            });
+            }
         };
 
         findFiles(conPath);
